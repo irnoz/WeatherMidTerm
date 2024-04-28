@@ -1,0 +1,97 @@
+﻿@model WeatherModel;
+
+@{
+    ViewData["Title"] = "Weather App";
+}
+
+<div class="container">
+    <h1>Weather App</h1>
+    <form asp-controller="Home" asp-action="GetWeatherDetails" method="post" class="scrollable-form">
+        <div>
+            <input type="text" name="Location" required="required" placeholder="Enter location..." />
+            <input type="submit" value="Submit" />
+        </div>
+    </form>
+
+    @if (Model != null)
+    {
+        <h5>City: @Model.location.name </h5> <br />
+        <h5>Country: @Model.location.region @Model.location.country </h5> <br />
+        <h5>Time: @Model.location.region @Model.location.localTime </h5> <br />
+        <h5>Temperature: @Model.current.temperature </h5> <br />
+        <h5>Wind Speed: @Model.current.wind_speed.ToString() </h5> <br />
+        <h5>Wind Direction: @Model.current.wind_dir.ToString() </h5> <br />
+        <h5>Precipitation: @Model.current.precip.ToString() </h5> <br />
+        <h5>Humidity: @Model.current.humidity.ToString() </h5> <br />
+        <h5>Cloud Cover: @Model.current.cloudcover.ToString() </h5> <br />
+    }
+    else if (ViewData.ContainsKey("IsFormSubmitted") && (bool)(ViewData["IsFormSubmitted"] ?? true))
+    {
+        <p> @ViewData["Message"] </p>
+    }
+</div>
+
+<style>
+    body {
+        background: linear-gradient(to bottom right, #ffffcc, #99ccff);
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        font-size: 32px;
+        margin-bottom: 20px;
+        text-align: center;
+        color: #333;
+    }
+
+    form {
+        margin-bottom: 20px;
+        background-color: #007bff; 
+        padding: 20px;
+        border-radius: 8px;
+        overflow-y: auto; 
+        max-height: 200px;
+    }
+
+    input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+
+    input[type="submit"] {
+        width: 100%;
+        padding: 10px;
+        background-color: #fff;
+        color: #007bff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-top: 10px;
+    }
+
+    h5 {
+        margin-top: 10px;
+        font-size: 18px;
+        color: #333;
+    }
+
+    p {
+        font-size: 16px;
+        color: #dc3545;
+    }
+</style>
